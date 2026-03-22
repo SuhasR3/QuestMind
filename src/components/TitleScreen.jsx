@@ -1,8 +1,16 @@
 import { DISCLAIMER_TEXT } from '../data/content';
 
-export default function TitleScreen({ onStart }) {
+export default function TitleScreen({ onStart, user, onSignOut }) {
   return (
     <div className="title-screen screen-enter">
+      {user && onSignOut && (
+        <div className="title-screen__session pixel-panel">
+          <span className="title-screen__session-email">{user.email}</span>
+          <button type="button" className="title-screen__sign-out" onClick={() => onSignOut()}>
+            Sign out
+          </button>
+        </div>
+      )}
       <div className="title-screen__fog" aria-hidden="true">
         <div className="title-screen__fog-layer" />
         <div className="title-screen__fog-layer" />

@@ -1,4 +1,28 @@
-export default function DrakeSprite({ scale, opacity, defeated }) {
+const SPRITE_VARIANTS = {
+  fog_drake: { className: 'drake-sprite--fog', label: 'Fog Drake' },
+  the_static: { className: 'drake-sprite--vortex', label: 'The Static' },
+  the_weight: { className: 'drake-sprite--static', label: 'The Weight' },
+  mirror_twin: { className: 'drake-sprite--mirror', label: 'Mirror Twin' },
+};
+
+export default function DrakeSprite({ scale, opacity, defeated, questId }) {
+  const variant = SPRITE_VARIANTS[questId];
+
+  if (variant) {
+    return (
+      <div
+        className={`drake-sprite ${variant.className} ${defeated ? 'drake-sprite--defeated' : ''}`}
+        style={{
+          transform: `scale(${scale})`,
+          opacity,
+          transition: 'transform 0.8s ease, opacity 0.8s ease',
+        }}
+        role="img"
+        aria-label={variant.label}
+      />
+    );
+  }
+
   return (
     <svg
       className={`drake-sprite ${defeated ? 'drake-sprite--defeated' : ''}`}
@@ -31,10 +55,8 @@ export default function DrakeSprite({ scale, opacity, defeated }) {
         </filter>
       </defs>
 
-      {/* Outer fog aura */}
       <ellipse cx="110" cy="85" rx="100" ry="70" fill="url(#drakeFog)" filter="url(#fogBlur)" />
 
-      {/* Fog wisps */}
       <path
         d="M 30 90 Q 60 60 100 70 Q 140 55 180 75"
         fill="none"
@@ -54,24 +76,18 @@ export default function DrakeSprite({ scale, opacity, defeated }) {
         filter="url(#drakeBlur)"
       />
 
-      {/* Main body */}
       <ellipse cx="110" cy="85" rx="72" ry="48" fill="#2a1d45" opacity="0.75" />
-
-      {/* Body texture */}
       <ellipse cx="115" cy="82" rx="58" ry="38" fill="#322555" opacity="0.5" />
 
-      {/* Neck ridge */}
       <path
         d="M 70 60 Q 55 45 45 55 Q 55 50 70 65"
         fill="#3d2d5e"
         opacity="0.8"
       />
 
-      {/* Head */}
       <ellipse cx="55" cy="62" rx="30" ry="22" fill="#362860" />
       <ellipse cx="55" cy="62" rx="26" ry="18" fill="#3d2d5e" />
 
-      {/* Snout */}
       <ellipse cx="32" cy="68" rx="14" ry="9" fill="#3d2d5e" />
       <path
         d="M 20 68 Q 30 62 40 65"
@@ -80,11 +96,9 @@ export default function DrakeSprite({ scale, opacity, defeated }) {
         strokeWidth="1.5"
       />
 
-      {/* Horns */}
       <path d="M 42 48 L 32 28 L 46 44" fill="#4d3d6e" stroke="#5d4d7e" strokeWidth="1" />
       <path d="M 62 44 L 58 22 L 68 40" fill="#4d3d6e" stroke="#5d4d7e" strokeWidth="1" />
 
-      {/* Eyes */}
       <ellipse cx="44" cy="58" rx="5" ry="4" fill="url(#eyeGlow)" />
       <ellipse cx="62" cy="56" rx="5" ry="4" fill="url(#eyeGlow)" />
       <ellipse cx="44" cy="58" rx="2.5" ry="2.2" fill="#ffd85a" />
@@ -92,7 +106,6 @@ export default function DrakeSprite({ scale, opacity, defeated }) {
       <ellipse cx="44" cy="58" rx="1" ry="2" fill="#1a0f2e" />
       <ellipse cx="62" cy="56" rx="1" ry="2" fill="#1a0f2e" />
 
-      {/* Mouth */}
       <path
         d="M 22 72 Q 35 78 48 72"
         fill="none"
@@ -101,7 +114,6 @@ export default function DrakeSprite({ scale, opacity, defeated }) {
         strokeLinecap="round"
       />
 
-      {/* Wing shapes */}
       <path
         d="M 130 50 Q 165 22 190 45 Q 170 40 140 58"
         fill="#2a1d45"
@@ -115,14 +127,12 @@ export default function DrakeSprite({ scale, opacity, defeated }) {
         opacity="0.35"
       />
 
-      {/* Lower wing */}
       <path
         d="M 125 100 Q 160 115 185 98 Q 160 105 130 95"
         fill="#2a1d45"
         opacity="0.4"
       />
 
-      {/* Tail */}
       <path
         d="M 170 85 Q 190 78 200 82 Q 208 88 202 95 Q 195 90 185 88"
         fill="#2a1d45"
@@ -131,7 +141,6 @@ export default function DrakeSprite({ scale, opacity, defeated }) {
         strokeWidth="1"
       />
 
-      {/* Belly scale hints */}
       <path d="M 80 95 Q 110 105 140 95" fill="none" stroke="#4d3d6e" strokeWidth="0.8" opacity="0.3" />
       <path d="M 85 100 Q 110 108 135 100" fill="none" stroke="#4d3d6e" strokeWidth="0.6" opacity="0.2" />
     </svg>

@@ -21,7 +21,7 @@ export default function BattleScreen({ state, onAction }) {
       <div className="enemy-hud pixel-panel">
         <div className="enemy-hud__header">
           <div className="enemy-hud__name">
-            FOG DRAKE <span>Lv.03</span>
+            {state.questName} <span>{state.questLevel}</span>
           </div>
           <div className="enemy-hud__beat">
             Beat {Math.min(state.beat + 1, 3)}/3
@@ -59,6 +59,7 @@ export default function BattleScreen({ state, onAction }) {
         drakeOpacity={state.drakeOpacity}
         actionEffect={state.actionEffect}
         beat={state.beat}
+        questId={state.activeQuest}
       />
 
       {/* ─── Field Note (bottom-left) ─── */}
@@ -67,13 +68,23 @@ export default function BattleScreen({ state, onAction }) {
         <p className="field-note__text">{state.fieldNote}</p>
       </div>
 
-      {/* ─── Action Cards (bottom-right) ─── */}
-      <ActionCards
-        key={state.beat}
-        choices={state.choices}
-        onAction={onAction}
-        disabled={state.transitioning}
-      />
+      {/* ─── Action Area (bottom-right) ─── */}
+      <div className="action-area">
+        {state.toastMessage && (
+          <div
+            key={`toast-${state.beat}-${state.actionEffect}`}
+            className="technique-toast pixel-panel"
+          >
+            {state.toastMessage}
+          </div>
+        )}
+        <ActionCards
+          key={state.beat}
+          choices={state.choices}
+          onAction={onAction}
+          disabled={state.transitioning}
+        />
+      </div>
     </div>
   );
 }

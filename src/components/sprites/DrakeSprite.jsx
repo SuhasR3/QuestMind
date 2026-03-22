@@ -1,15 +1,23 @@
+const SPRITE_VARIANTS = {
+  fog_drake: { className: 'drake-sprite--fog', label: 'Fog Drake' },
+  the_static: { className: 'drake-sprite--static', label: 'The Static' },
+  the_weight: { className: 'drake-sprite--static', label: 'The Weight' },
+};
+
 export default function DrakeSprite({ scale, opacity, defeated, questId }) {
-  if (questId === 'fog_drake') {
+  const variant = SPRITE_VARIANTS[questId];
+
+  if (variant) {
     return (
       <div
-        className={`drake-sprite drake-sprite--fog ${defeated ? 'drake-sprite--defeated' : ''}`}
+        className={`drake-sprite ${variant.className} ${defeated ? 'drake-sprite--defeated' : ''}`}
         style={{
           transform: `scale(${scale})`,
           opacity,
           transition: 'transform 0.8s ease, opacity 0.8s ease',
         }}
         role="img"
-        aria-label="Fog Drake"
+        aria-label={variant.label}
       />
     );
   }

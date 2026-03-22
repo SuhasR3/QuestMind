@@ -1273,14 +1273,14 @@ button:focus-visible {
 
 .drake-sprite--fog {
   width: 135px;
-  height: 160px;
+  height: 220px;
   background-image: url('/drake-fog.png');
   background-repeat: no-repeat;
   background-size: 300% auto;
   background-position: 0 0;
   image-rendering: pixelated;
   position: relative;
-  bottom: 55px;
+  bottom: -10px;
   animation: drakeFogFrames 0.65s steps(3) infinite;
 }
 

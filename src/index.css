@@ -1280,7 +1280,7 @@ button:focus-visible {
   background-position: 0 0;
   image-rendering: pixelated;
   position: relative;
-  bottom: 35px;
+  bottom: 55px;
   animation: drakeFogFrames 0.65s steps(3) infinite;
 }
 

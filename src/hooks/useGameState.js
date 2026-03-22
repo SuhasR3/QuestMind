@@ -1,6 +1,6 @@
 import { useReducer, useCallback, useRef, useEffect } from 'react';
 import { checkCrisis, getQuestStart, resolveAction, getNextBeat, getDebrief } from '../providers/mockDM';
-import { QUESTS } from '../data/content';
+import { QUESTS, getQuestForAnswers } from '../data/content';
 import { useAnalytics } from './useAnalytics';
 
 const INITIAL_STATE = {
@@ -66,11 +66,13 @@ function reducer(state, action) {
 
       if (newStep >= 2) {
         const crisis = checkCrisis(newAnswers);
-        const quest = QUESTS[state.activeQuest];
+        const questId = getQuestForAnswers(newAnswers);
+        const quest = QUESTS[questId];
         return {
           ...state,
           intakeAnswers: newAnswers,
           intakeStep: newStep,
+          activeQuest: questId,
           screen: 'quest-intro',
           crisisMode: crisis,
           questName: quest.name,

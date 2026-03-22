@@ -1014,81 +1014,27 @@ button:focus-visible {
    ═══════════════════════════════════════════════ */
 
 .player-sprite {
-  width: 80px;
-  height: 175px;
-  overflow: hidden;
-  background-image: url('/knight-idle.png');
-  background-repeat: no-repeat;
-  background-size: 300% auto;
-  background-position: 0 -5px;
-  image-rendering: pixelated;
-  animation: spriteFrame 0.9s steps(3) infinite, idleFloat 3s ease-in-out infinite;
-}
-
-.player-sprite--approach {
-  animation: spriteFrame 0.9s steps(3) infinite, idleFloat 3s ease-in-out infinite, approachGlow 0.6s ease-out;
-}
-
-.player-sprite--observe {
-  animation: spriteFrame 0.9s steps(3) infinite, idleFloat 3s ease-in-out infinite, observeGlow 0.6s ease-out;
-}
-
-.player-sprite--ground {
-  animation: spriteFrame 0.9s steps(3) infinite, idleFloat 3s ease-in-out infinite, groundGlow 0.8s ease-out;
-}
-
-@keyframes spriteFrame {
-  to { background-position-x: -240px; }
-}
-
-/* ── Dark Knight variant (Fog Drake quest) ── */
-
-.player-sprite--drake {
   width: 166px;
   height: 166px;
+  overflow: hidden;
   background-image: url('/knight-dark.png');
+  background-repeat: no-repeat;
   background-size: 300% 300%;
   background-position: 0 0;
+  image-rendering: pixelated;
   animation: darkKnightFrames 1.2s steps(1) infinite, idleFloat 3s ease-in-out infinite;
 }
 
-.player-sprite--drake.player-sprite--approach {
+.player-sprite--approach {
   animation: darkKnightFrames 1.2s steps(1) infinite, idleFloat 3s ease-in-out infinite, approachGlow 0.6s ease-out;
 }
 
-.player-sprite--drake.player-sprite--observe {
+.player-sprite--observe {
   animation: darkKnightFrames 1.2s steps(1) infinite, idleFloat 3s ease-in-out infinite, observeGlow 0.6s ease-out;
 }
 
-.player-sprite--drake.player-sprite--ground {
+.player-sprite--ground {
   animation: darkKnightFrames 1.2s steps(1) infinite, idleFloat 3s ease-in-out infinite, groundGlow 0.8s ease-out;
-}
-
-/* ── Weight Knight variant (The Weight quest) ── */
-
-.player-sprite--weight {
-  width: 80px;
-  height: 130px;
-  background-image: url('/knight-weight.png');
-  background-size: 300% auto;
-  background-position: 0 0;
-  animation: weightKnightFrames 2.4s steps(3) infinite, idleFloat 3s ease-in-out infinite;
-}
-
-.player-sprite--weight.player-sprite--approach {
-  animation: weightKnightFrames 2.4s steps(3) infinite, idleFloat 3s ease-in-out infinite, approachGlow 0.6s ease-out;
-}
-
-.player-sprite--weight.player-sprite--observe {
-  animation: weightKnightFrames 2.4s steps(3) infinite, idleFloat 3s ease-in-out infinite, observeGlow 0.6s ease-out;
-}
-
-.player-sprite--weight.player-sprite--ground {
-  animation: weightKnightFrames 2.4s steps(3) infinite, idleFloat 3s ease-in-out infinite, groundGlow 0.8s ease-out;
-}
-
-@keyframes weightKnightFrames {
-  to { background-position-x: -240px; }
 }
 
 @keyframes darkKnightFrames {

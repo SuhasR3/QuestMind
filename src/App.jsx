@@ -3,6 +3,7 @@ import { useAuth } from './context/AuthContext';
 import AuthScreen from './components/AuthScreen';
 import TitleScreen from './components/TitleScreen';
 import IntakeScreen from './components/IntakeScreen';
+import QuestIntroScreen from './components/QuestIntroScreen';
 import BattleScreen from './components/battle/BattleScreen';
 import DebriefScreen from './components/DebriefScreen';
 import CrisisOverlay from './components/CrisisOverlay';
@@ -12,6 +13,8 @@ export default function App() {
   const {
     state,
     startGame,
+    setQuest,
+    startBattle,
     answerIntake,
     selectAction,
     dismissCrisis,
@@ -37,11 +40,20 @@ export default function App() {
   return (
     <div className="app">
       {state.screen === 'title' && (
-        <TitleScreen onStart={startGame} user={user} onSignOut={signOut} />
+        <TitleScreen
+          onStart={startGame}
+          onDevQuest={setQuest}
+          user={user}
+          onSignOut={signOut}
+        />
       )}
 
       {state.screen === 'intake' && (
         <IntakeScreen step={state.intakeStep} onAnswer={answerIntake} />
+      )}
+
+      {state.screen === 'quest-intro' && (
+        <QuestIntroScreen questId={state.activeQuest} onStart={startBattle} />
       )}
 
       {state.screen === 'quest' && (

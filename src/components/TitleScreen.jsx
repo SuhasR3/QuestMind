@@ -1,6 +1,8 @@
 import { DISCLAIMER_TEXT } from '../data/content';
 
-export default function TitleScreen({ onStart, user, onSignOut }) {
+const DEV_QUESTS = ['fog_drake', 'the_weight', 'the_static', 'mirror_twin'];
+
+export default function TitleScreen({ onStart, onDevQuest, user, onSignOut }) {
   return (
     <div className="title-screen screen-enter">
       {user && onSignOut && (
@@ -11,22 +13,17 @@ export default function TitleScreen({ onStart, user, onSignOut }) {
           </button>
         </div>
       )}
-      <div className="title-screen__fog" aria-hidden="true">
-        <div className="title-screen__fog-layer" />
-        <div className="title-screen__fog-layer" />
-        <div className="title-screen__fog-layer" />
-      </div>
+      <img
+        src="/logo.png"
+        alt=""
+        className="title-screen__bg"
+        draggable="false"
+      />
+      <div className="title-screen__scrim" aria-hidden="true" />
 
-      <div className="title-screen__content">
-        <h1 className="title-screen__logo">
-          QUESTMIND
-          <span>BATTLE</span>
-        </h1>
-
+      <div className="title-screen__overlay">
         <p className="title-screen__tagline">
-          A mental fitness experience.<br />
-          Not therapy. Not about winning.<br />
-          A game about practicing.
+          A mental fitness experience. Not therapy. Not about winning. A game about practicing.
         </p>
 
         <button
@@ -36,6 +33,21 @@ export default function TitleScreen({ onStart, user, onSignOut }) {
         >
           BEGIN QUEST
         </button>
+
+        {onDevQuest && (
+          <div className="dev-shortcuts">
+            <span className="dev-shortcuts__label">dev &rarr;</span>
+            {DEV_QUESTS.map((id) => (
+              <button
+                key={id}
+                className="dev-shortcut-btn"
+                onClick={() => onDevQuest(id)}
+              >
+                {id.replace(/_/g, ' ')}
+              </button>
+            ))}
+          </div>
+        )}
 
         <p className="title-screen__disclaimer">{DISCLAIMER_TEXT}</p>
       </div>

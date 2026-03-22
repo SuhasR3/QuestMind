@@ -1,8 +1,8 @@
 const SPRITE_VARIANTS = {
   fog_drake: { className: 'drake-sprite--fog', label: 'Fog Drake', flip: true },
-  the_static: { className: 'drake-sprite--vortex', label: 'The Static' },
+  the_static: { className: 'drake-sprite--vortex', label: 'The Static', flip: true },
   the_weight: { className: 'drake-sprite--static', label: 'The Weight' },
-  mirror_twin: { className: 'drake-sprite--mirror', label: 'Mirror Twin' },
+  mirror_twin: { className: 'drake-sprite--mirror', label: 'Mirror Twin', flip: true },
 };
 
 export default function DrakeSprite({ scale, opacity, defeated, questId }) {

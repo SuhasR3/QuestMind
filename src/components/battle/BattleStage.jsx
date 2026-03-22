@@ -7,6 +7,7 @@ export default function BattleStage({
   drakeOpacity,
   actionEffect,
   beat,
+  questId,
 }) {
   const playerLeft = 12 + playerPosition * 6;
   const defeated = beat >= 3;
@@ -34,7 +35,7 @@ export default function BattleStage({
         className="battle-stage__player"
         style={{ left: `${playerLeft}%` }}
       >
-        <PlayerSprite actionEffect={actionEffect} />
+        <PlayerSprite actionEffect={actionEffect} questId={questId} />
       </div>
 
       <div
@@ -48,6 +49,7 @@ export default function BattleStage({
           scale={1}
           opacity={1}
           defeated={defeated}
+          questId={questId}
         />
       </div>
     </div>

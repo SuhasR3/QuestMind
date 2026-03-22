@@ -1,15 +1,19 @@
 import { useReducer, useCallback, useRef, useEffect } from 'react';
 import { checkCrisis, getQuestStart, resolveAction, getNextBeat, getDebrief } from '../providers/mockDM';
-import { BEAT_INTROS, FIELD_NOTES } from '../data/content';
+import { QUESTS } from '../data/content';
 import { useAnalytics } from './useAnalytics';
 
 const INITIAL_STATE = {
   screen: 'title',
   intakeStep: 0,
   intakeAnswers: {},
+  activeQuest: 'fog_drake',
+  questName: 'FOG DRAKE',
+  questLevel: 'Lv.03',
   beat: 0,
   choices: [],
   choiceHistory: [],
+  choiceResults: [],
   currentNarrative: '',
   fieldNote: '',
   threat: 72,
@@ -20,8 +24,10 @@ const INITIAL_STATE = {
   debriefData: null,
   transitioning: false,
   xpTotal: 0,
+  correctCount: 0,
   battleLog: [],
   actionEffect: null,
+  toastMessage: '',
 };
 
 function reducer(state, action) {
@@ -29,24 +35,46 @@ function reducer(state, action) {
     case 'START_GAME':
       return { ...INITIAL_STATE, screen: 'intake', intakeStep: 0 };
 
+    case 'SET_QUEST': {
+      const quest = QUESTS[action.questId];
+      if (!quest) return state;
+      return {
+        ...INITIAL_STATE,
+        activeQuest: action.questId,
+        questName: quest.name,
+        questLevel: quest.level,
+        screen: 'quest-intro',
+      };
+    }
+
+    case 'START_BATTLE': {
+      const questStart = getQuestStart(state.activeQuest);
+      return {
+        ...state,
+        screen: 'quest',
+        beat: 0,
+        choices: questStart.choices,
+        currentNarrative: questStart.narrative,
+        fieldNote: questStart.fieldNote,
+        battleLog: [questStart.narrative],
+      };
+    }
+
     case 'ANSWER_INTAKE': {
       const newAnswers = { ...state.intakeAnswers, [action.qId]: action.aId };
       const newStep = state.intakeStep + 1;
 
       if (newStep >= 2) {
         const crisis = checkCrisis(newAnswers);
-        const quest = getQuestStart();
+        const quest = QUESTS[state.activeQuest];
         return {
           ...state,
           intakeAnswers: newAnswers,
           intakeStep: newStep,
-          screen: 'quest',
+          screen: 'quest-intro',
           crisisMode: crisis,
-          beat: 0,
-          choices: quest.choices,
-          currentNarrative: quest.narrative,
-          fieldNote: quest.fieldNote,
-          battleLog: [quest.narrative],
+          questName: quest.name,
+          questLevel: quest.level,
         };
       }
       return { ...state, intakeAnswers: newAnswers, intakeStep: newStep };
@@ -54,19 +82,28 @@ function reducer(state, action) {
 
     case 'SELECT_ACTION': {
       if (state.transitioning) return state;
-      const result = resolveAction(state.beat, action.actionId);
+      const result = resolveAction(state.activeQuest, state.beat, action.actionId);
       if (!result) return state;
+      const isCorrect = result.correct !== false;
       return {
         ...state,
         transitioning: true,
         actionEffect: action.actionId,
         choiceHistory: [...state.choiceHistory, action.actionId],
-        threat: Math.max(0, state.threat + result.threatDelta),
+        choiceResults: [...state.choiceResults, {
+          beat: state.beat + 1,
+          actionId: action.actionId,
+          correct: isCorrect,
+          toast: result.toast || '',
+        }],
+        threat: Math.max(0, Math.min(100, state.threat + result.threatDelta)),
         playerPosition: state.playerPosition + (result.effects.playerShift || 0),
-        drakeScale: Math.max(0.2, state.drakeScale + (result.effects.drakeScale || 0)),
-        drakeOpacity: Math.max(0.15, state.drakeOpacity + (result.effects.drakeOpacity || 0)),
+        drakeScale: Math.max(0.2, Math.min(1.5, state.drakeScale + (result.effects.drakeScale || 0))),
+        drakeOpacity: Math.max(0.15, Math.min(1.2, state.drakeOpacity + (result.effects.drakeOpacity || 0))),
         xpTotal: state.xpTotal + result.xpDelta,
+        correctCount: state.correctCount + (isCorrect ? 1 : 0),
         currentNarrative: result.narrative,
+        toastMessage: result.toast || '',
         battleLog: [...state.battleLog, result.narrative],
       };
     }
@@ -74,22 +111,24 @@ function reducer(state, action) {
     case 'ADVANCE_BEAT': {
       const newBeat = state.beat + 1;
       if (newBeat >= 3) {
-        const debrief = getDebrief(state.choiceHistory);
+        const debrief = getDebrief(state.activeQuest, state.choiceHistory);
         return {
           ...state,
           beat: newBeat,
           transitioning: false,
           actionEffect: null,
+          toastMessage: '',
           screen: 'debrief',
           debriefData: debrief,
         };
       }
-      const next = getNextBeat(state.beat);
+      const next = getNextBeat(state.activeQuest, state.beat);
       return {
         ...state,
         beat: newBeat,
         transitioning: false,
         actionEffect: null,
+        toastMessage: '',
         choices: next.choices,
         currentNarrative: next.narrative,
         fieldNote: next.fieldNote,
@@ -121,6 +160,14 @@ export function useGameState() {
     dispatch({ type: 'START_GAME' });
     emit('session_started');
   }, [emit]);
+
+  const setQuest = useCallback((questId) => {
+    dispatch({ type: 'SET_QUEST', questId });
+  }, []);
+
+  const startBattle = useCallback(() => {
+    dispatch({ type: 'START_BATTLE' });
+  }, []);
 
   const answerIntake = useCallback(
     (qId, aId) => {
@@ -189,6 +236,8 @@ export function useGameState() {
   return {
     state,
     startGame,
+    setQuest,
+    startBattle,
     answerIntake,
     selectAction,
     triggerCrisis,

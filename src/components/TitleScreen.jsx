@@ -1,6 +1,8 @@
 import { DISCLAIMER_TEXT } from '../data/content';
 
-export default function TitleScreen({ onStart }) {
+const DEV_QUESTS = ['fog_drake', 'the_weight', 'the_static', 'mirror_twin'];
+
+export default function TitleScreen({ onStart, onDevQuest }) {
   return (
     <div className="title-screen screen-enter">
       <div className="title-screen__fog" aria-hidden="true">
@@ -28,6 +30,21 @@ export default function TitleScreen({ onStart }) {
         >
           BEGIN QUEST
         </button>
+
+        {onDevQuest && (
+          <div className="dev-shortcuts">
+            <span className="dev-shortcuts__label">dev &rarr;</span>
+            {DEV_QUESTS.map((id) => (
+              <button
+                key={id}
+                className="dev-shortcut-btn"
+                onClick={() => onDevQuest(id)}
+              >
+                {id.replace(/_/g, ' ')}
+              </button>
+            ))}
+          </div>
+        )}
 
         <p className="title-screen__disclaimer">{DISCLAIMER_TEXT}</p>
       </div>

@@ -1,6 +1,6 @@
 const SPRITE_VARIANTS = {
   fog_drake: { className: 'drake-sprite--fog', label: 'Fog Drake' },
-  the_static: { className: 'drake-sprite--static', label: 'The Static' },
+  the_static: { className: 'drake-sprite--vortex', label: 'The Static' },
   the_weight: { className: 'drake-sprite--static', label: 'The Weight' },
 };
 

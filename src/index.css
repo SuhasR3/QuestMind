@@ -1104,6 +1104,29 @@ button:focus-visible {
   to { background-position-x: -384px; }
 }
 
+/* ── Vortex monster variant (The Static quest) ── */
+
+.drake-sprite--vortex {
+  width: 128px;
+  height: 209px;
+  background-image: url('/monster-vortex.png');
+  background-repeat: no-repeat;
+  background-size: 300% auto;
+  background-position: 0 0;
+  image-rendering: pixelated;
+  position: relative;
+  bottom: 10px;
+  animation: vortexMonsterFrames 0.6s steps(3) infinite;
+}
+
+.drake-sprite--vortex.drake-sprite--defeated {
+  animation: vortexMonsterFrames 0.6s steps(3) infinite, drakeDefeat 1.2s ease-out both;
+}
+
+@keyframes vortexMonsterFrames {
+  to { background-position-x: -384px; }
+}
+
 /* ═══════════════════════════════════════════════
    Animations
    ═══════════════════════════════════════════════ */

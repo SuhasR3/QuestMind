@@ -3,18 +3,18 @@
    ═══════════════════════════════════════════════ */
 
 :root {
-  --bg-deep: #07060e;
-  --bg-mid: #0d0b1a;
-  --bg-panel: rgba(11, 10, 26, 0.92);
-  --bg-panel-solid: #0e0d1f;
+  --bg-deep: #020818;
+  --bg-mid: #0a0e24;
+  --bg-panel: rgba(6, 10, 30, 0.92);
+  --bg-panel-solid: #080c22;
 
-  --border-pixel: #2e2b4a;
-  --border-pixel-light: #4a4672;
-  --border-glow: rgba(100, 80, 180, 0.25);
+  --border-pixel: #1e2848;
+  --border-pixel-light: #344070;
+  --border-glow: rgba(23, 165, 200, 0.2);
 
-  --text-primary: #ddd8ee;
-  --text-secondary: #9e98b8;
-  --text-dim: #6b6588;
+  --text-primary: #d8e4f0;
+  --text-secondary: #8ea0b8;
+  --text-dim: #506480;
 
   --approach: #e8a317;
   --approach-dim: rgba(232, 163, 23, 0.12);
@@ -22,6 +22,9 @@
   --observe-dim: rgba(23, 165, 200, 0.12);
   --ground: #2db87a;
   --ground-dim: rgba(45, 184, 122, 0.12);
+
+  --accent-glow: rgba(23, 165, 200, 0.35);
+  --accent-glow-strong: rgba(23, 165, 200, 0.6);
 
   --threat-low: #2db87a;
   --threat-mid: #e8c832;
@@ -150,108 +153,96 @@ button:focus-visible {
    ═══════════════════════════════════════════════ */
 
 .title-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  padding: 2rem;
-  text-align: center;
   position: relative;
-  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.title-screen__fog {
+.title-screen__bg {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  user-select: none;
   pointer-events: none;
   z-index: 0;
 }
 
-.title-screen__fog-layer {
+.title-screen__scrim {
   position: absolute;
   inset: 0;
-  border-radius: 50%;
-  filter: blur(80px);
-}
-
-.title-screen__fog-layer:nth-child(1) {
-  background: radial-gradient(ellipse at 30% 50%, rgba(80, 50, 140, 0.18) 0%, transparent 60%);
-  animation: fogDriftA 12s ease-in-out infinite;
-}
-
-.title-screen__fog-layer:nth-child(2) {
-  background: radial-gradient(ellipse at 70% 40%, rgba(40, 80, 130, 0.14) 0%, transparent 60%);
-  animation: fogDriftB 16s ease-in-out infinite;
-}
-
-.title-screen__fog-layer:nth-child(3) {
-  background: radial-gradient(ellipse at 50% 70%, rgba(60, 30, 90, 0.12) 0%, transparent 50%);
-  animation: fogDriftC 20s ease-in-out infinite;
-}
-
-.title-screen__content {
-  position: relative;
   z-index: 1;
-  animation: screenFadeIn 1s ease-out both;
+  background: linear-gradient(
+    to bottom,
+    transparent 30%,
+    rgba(2, 8, 24, 0.55) 55%,
+    rgba(2, 8, 24, 0.88) 75%,
+    rgba(2, 8, 24, 0.96) 100%
+  );
 }
 
-.title-screen__logo {
-  font-family: var(--pixel-font);
-  font-size: clamp(1.2rem, 3vw, 2rem);
-  color: var(--text-primary);
-  text-shadow:
-    0 0 20px rgba(100, 80, 180, 0.4),
-    0 0 40px rgba(100, 80, 180, 0.2);
-  margin-bottom: 0.5rem;
-  line-height: 1.8;
-}
-
-.title-screen__logo span {
-  display: block;
-  font-size: 0.6em;
-  color: var(--text-secondary);
-  text-shadow: none;
-  margin-top: 0.3rem;
-  letter-spacing: 4px;
+.title-screen__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 2rem 2.5rem;
+  animation: screenFadeIn 1s ease-out 0.3s both;
 }
 
 .title-screen__tagline {
   font-family: var(--body-font);
-  font-size: 1.15rem;
+  font-size: 0.95rem;
   font-style: italic;
-  color: var(--text-secondary);
-  margin: 1.5rem 0 2.5rem;
-  max-width: 440px;
-  line-height: 1.6;
+  color: rgba(200, 215, 235, 0.75);
+  margin: 0 0 1rem;
+  max-width: 700px;
+  line-height: 1.4;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
 }
 
 .title-screen__start {
   font-family: var(--pixel-font);
-  font-size: 0.75rem;
-  color: var(--text-primary);
-  padding: 14px 36px;
-  border: 2px solid var(--border-pixel-light);
-  background: rgba(60, 50, 100, 0.25);
-  transition: all 0.2s ease;
-  letter-spacing: 1px;
+  font-size: 0.8rem;
+  color: #e0ecf8;
+  padding: 16px 44px;
+  border: 2px solid rgba(23, 165, 200, 0.45);
+  background: rgba(10, 30, 60, 0.5);
+  backdrop-filter: blur(6px);
+  transition: all 0.25s ease;
+  letter-spacing: 2px;
   position: relative;
   overflow: hidden;
+  box-shadow:
+    0 0 18px rgba(23, 165, 200, 0.15),
+    inset 0 0 12px rgba(23, 165, 200, 0.06);
 }
 
 .title-screen__start::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, transparent 40%, rgba(100, 80, 180, 0.15) 100%);
+  background: linear-gradient(135deg, transparent 30%, rgba(23, 165, 200, 0.15) 100%);
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 0.25s;
 }
 
 .title-screen__start:hover {
-  border-color: var(--observe);
-  box-shadow: 0 0 24px rgba(23, 165, 200, 0.2);
-  transform: translateY(-1px);
+  border-color: rgba(23, 165, 200, 0.8);
+  box-shadow:
+    0 0 32px rgba(23, 165, 200, 0.35),
+    inset 0 0 16px rgba(23, 165, 200, 0.1);
+  transform: translateY(-2px);
+  color: #fff;
 }
 
 .title-screen__start:hover::before {
@@ -263,12 +254,12 @@ button:focus-visible {
 }
 
 .title-screen__disclaimer {
-  margin-top: 2.5rem;
-  padding: 12px 20px;
+  margin-top: 1.8rem;
+  padding: 10px 20px;
   max-width: 520px;
-  font-size: 0.78rem;
-  color: var(--text-dim);
-  border-top: 1px solid var(--border-pixel);
+  font-size: 0.72rem;
+  color: rgba(120, 140, 170, 0.7);
+  border-top: 1px solid rgba(40, 60, 90, 0.4);
   line-height: 1.6;
 }
 
@@ -525,7 +516,7 @@ button:focus-visible {
   left: 5%;
   right: 5%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(74, 70, 114, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(40, 70, 110, 0.25), transparent);
 }
 
 .battle-stage__fog-1,
@@ -539,7 +530,7 @@ button:focus-visible {
 .battle-stage__fog-1 {
   background: radial-gradient(
     ellipse at 65% 55%,
-    rgba(80, 60, 140, 0.12) 0%,
+    rgba(15, 60, 120, 0.14) 0%,
     transparent 55%
   );
   animation: fogDriftA 10s ease-in-out infinite;
@@ -548,7 +539,7 @@ button:focus-visible {
 .battle-stage__fog-2 {
   background: radial-gradient(
     ellipse at 35% 45%,
-    rgba(50, 80, 120, 0.08) 0%,
+    rgba(20, 80, 130, 0.1) 0%,
     transparent 50%
   );
   animation: fogDriftB 14s ease-in-out infinite;
@@ -557,7 +548,7 @@ button:focus-visible {
 .battle-stage__fog-3 {
   background: radial-gradient(
     ellipse at 50% 60%,
-    rgba(30, 20, 60, 0.15) 0%,
+    rgba(8, 25, 55, 0.18) 0%,
     transparent 40%
   );
   animation: fogDriftC 18s ease-in-out infinite;
@@ -1361,7 +1352,7 @@ button:focus-visible {
   font-size: clamp(0.8rem, 2vw, 1.2rem);
   color: var(--text-primary);
   padding: 12px 28px;
-  text-shadow: 0 0 20px rgba(100, 80, 180, 0.3);
+  text-shadow: 0 0 20px rgba(23, 165, 200, 0.3);
   margin-bottom: 0.5rem;
 }
 

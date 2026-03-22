@@ -5,22 +5,18 @@ const DEV_QUESTS = ['fog_drake', 'the_weight', 'the_static', 'mirror_twin'];
 export default function TitleScreen({ onStart, onDevQuest }) {
   return (
     <div className="title-screen screen-enter">
-      <div className="title-screen__fog" aria-hidden="true">
-        <div className="title-screen__fog-layer" />
-        <div className="title-screen__fog-layer" />
-        <div className="title-screen__fog-layer" />
-      </div>
+      <img
+        src="/logo.png"
+        alt=""
+        className="title-screen__bg"
+        draggable="false"
+      />
 
-      <div className="title-screen__content">
-        <h1 className="title-screen__logo">
-          QUESTMIND
-          <span>BATTLE</span>
-        </h1>
+      <div className="title-screen__scrim" aria-hidden="true" />
 
+      <div className="title-screen__overlay">
         <p className="title-screen__tagline">
-          A mental fitness experience.<br />
-          Not therapy. Not about winning.<br />
-          A game about practicing.
+          A mental fitness experience. Not therapy. Not about winning. A game about practicing.
         </p>
 
         <button

@@ -26,6 +26,17 @@ export const CRISIS_PATTERNS = [
   { q1: 'stormy', q2: 'freeze' },
 ];
 
+const WEATHER_TO_QUEST = {
+  foggy: 'fog_drake',
+  stormy: 'the_weight',
+  frozen: 'the_static',
+  breezy: 'mirror_twin',
+};
+
+export function getQuestForAnswers(answers) {
+  return WEATHER_TO_QUEST[answers.q1] || 'fog_drake';
+}
+
 export const BEAT_INTROS = [
   'The path narrows. Thick fog coils ahead\u200a\u2014\u200aand within it, something breathes. The FOG DRAKE takes shape, vast and cold. Pressure builds behind your ribs.',
   'The drake shifts, testing your resolve. Fog tendrils creep forward, probing for weakness. The air hums with tension.',

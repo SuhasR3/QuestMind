@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { DISCLAIMER_TEXT } from '../data/content';
 
 const DEV_QUESTS = ['fog_drake', 'the_weight', 'the_static', 'mirror_twin'];
 
 export default function TitleScreen({ onStart, onDevQuest, user, onSignOut }) {
+  const [devMode, setDevMode] = useState(false);
+
   return (
     <div className="title-screen screen-enter">
       {user && onSignOut && (
@@ -36,16 +39,25 @@ export default function TitleScreen({ onStart, onDevQuest, user, onSignOut }) {
 
         {onDevQuest && (
           <div className="dev-shortcuts">
-            <span className="dev-shortcuts__label">dev &rarr;</span>
-            {DEV_QUESTS.map((id) => (
-              <button
-                key={id}
-                className="dev-shortcut-btn"
-                onClick={() => onDevQuest(id)}
-              >
-                {id.replace(/_/g, ' ')}
-              </button>
-            ))}
+            <button
+              type="button"
+              className="dev-toggle-btn"
+              onClick={() => setDevMode((v) => !v)}
+            >
+              {devMode ? '✕ close dev' : '⚙ dev mode'}
+            </button>
+
+            {devMode &&
+              DEV_QUESTS.map((id) => (
+                <button
+                  key={id}
+                  type="button"
+                  className="dev-shortcut-btn"
+                  onClick={() => onDevQuest(id)}
+                >
+                  {id.replace(/_/g, ' ')}
+                </button>
+              ))}
           </div>
         )}
 

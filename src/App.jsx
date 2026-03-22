@@ -1,4 +1,6 @@
 import { useGameState } from './hooks/useGameState';
+import { useAuth } from './context/AuthContext';
+import AuthScreen from './components/AuthScreen';
 import TitleScreen from './components/TitleScreen';
 import IntakeScreen from './components/IntakeScreen';
 import QuestIntroScreen from './components/QuestIntroScreen';
@@ -7,6 +9,7 @@ import DebriefScreen from './components/DebriefScreen';
 import CrisisOverlay from './components/CrisisOverlay';
 
 export default function App() {
+  const { user, loading, signOut } = useAuth();
   const {
     state,
     startGame,
@@ -18,10 +21,31 @@ export default function App() {
     restart,
   } = useGameState();
 
+  if (loading) {
+    return (
+      <div className="app app--loading">
+        <p className="app-loading-text">Loading…</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="app">
+        <AuthScreen />
+      </div>
+    );
+  }
+
   return (
     <div className="app">
       {state.screen === 'title' && (
-        <TitleScreen onStart={startGame} onDevQuest={setQuest} />
+        <TitleScreen
+          onStart={startGame}
+          onDevQuest={setQuest}
+          user={user}
+          onSignOut={signOut}
+        />
       )}
 
       {state.screen === 'intake' && (

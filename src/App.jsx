@@ -1,4 +1,5 @@
 import { useGameState } from './hooks/useGameState';
+import { useBackgroundMusic } from './hooks/useBackgroundMusic';
 import { useAuth } from './context/AuthContext';
 import AuthScreen from './components/AuthScreen';
 import TitleScreen from './components/TitleScreen';
@@ -20,6 +21,7 @@ export default function App() {
     dismissCrisis,
     restart,
   } = useGameState();
+  const { ensurePlaying } = useBackgroundMusic();
 
   if (loading) {
     return (
@@ -37,12 +39,16 @@ export default function App() {
     );
   }
 
+  const handleStart = () => { ensurePlaying(); startGame(); };
+  const handleDevQuest = (id) => { ensurePlaying(); setQuest(id); };
+  const handleBattle = () => { ensurePlaying(); startBattle(); };
+
   return (
     <div className="app">
       {state.screen === 'title' && (
         <TitleScreen
-          onStart={startGame}
-          onDevQuest={setQuest}
+          onStart={handleStart}
+          onDevQuest={handleDevQuest}
           user={user}
           onSignOut={signOut}
         />
@@ -53,7 +59,7 @@ export default function App() {
       )}
 
       {state.screen === 'quest-intro' && (
-        <QuestIntroScreen questId={state.activeQuest} onStart={startBattle} />
+        <QuestIntroScreen questId={state.activeQuest} onStart={handleBattle} />
       )}
 
       {state.screen === 'quest' && (

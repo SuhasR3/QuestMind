@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useGameState } from './hooks/useGameState';
 import { useBackgroundMusic } from './hooks/useBackgroundMusic';
 import { useAuth } from './context/AuthContext';
@@ -22,6 +23,10 @@ export default function App() {
     restart,
   } = useGameState();
   const { ensurePlaying } = useBackgroundMusic();
+
+  useEffect(() => {
+    if (user) ensurePlaying();
+  }, [user, ensurePlaying]);
 
   if (loading) {
     return (
@@ -49,6 +54,7 @@ export default function App() {
         <TitleScreen
           onStart={handleStart}
           onDevQuest={handleDevQuest}
+          onInteract={ensurePlaying}
           user={user}
           onSignOut={signOut}
         />

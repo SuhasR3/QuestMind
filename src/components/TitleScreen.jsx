@@ -3,11 +3,11 @@ import { DISCLAIMER_TEXT } from '../data/content';
 
 const DEV_QUESTS = ['fog_drake', 'the_weight', 'the_static', 'mirror_twin'];
 
-export default function TitleScreen({ onStart, onDevQuest, user, onSignOut }) {
+export default function TitleScreen({ onStart, onDevQuest, onInteract, user, onSignOut }) {
   const [devMode, setDevMode] = useState(false);
 
   return (
-    <div className="title-screen screen-enter">
+    <div className="title-screen screen-enter" onClick={onInteract}>
       {user && onSignOut && (
         <div className="title-screen__session pixel-panel">
           <span className="title-screen__session-email">{user.email}</span>

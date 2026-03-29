@@ -1,8 +1,6 @@
 # QuestMind Battle
-
-A 5-minute interactive mental fitness experience that teaches evidence-based emotional regulation skills through a retro RPG battle loop.
-
-> **This is not therapy.** QuestMind Battle is a mental fitness game, not a diagnostic tool or treatment. If you are in crisis, please call **988** or text **HOME to 741741**.
+![Alternative Text](/public/Landing%20Page.png)
+A interactive mental fitness experience that teaches evidence-based emotional regulation skills through a retro RPG battle loop.
 
 ## Quick Start
 
@@ -18,7 +16,7 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 1. **Title Screen** — Read the disclaimer, then press BEGIN QUEST.
 2. **Intake** — Answer two quick questions about how you're feeling.
-3. **Battle** — Face the Fog Drake across 3 beats. Each beat, choose one of three actions:
+3. **Battle** — Face a manifestation of your psychological state, choose one of three actions:
    - **Approach** — Step toward the discomfort (Exposure therapy)
    - **Observe** — Watch and name your experience (Cognitive defusion / ACT)
    - **Ground** — Anchor in physical sensation (Somatic grounding)
@@ -66,14 +64,6 @@ src/
 - No PII collection or persistence
 - Supportive, non-judgmental language throughout
 
-## Build for Production
-
-```bash
-npm run build
-npm run preview
-```
-
-Output goes to `dist/` — deploy to any static host.
 
 ## Evidence Basis
 

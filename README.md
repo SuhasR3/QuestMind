@@ -1,4 +1,4 @@
-# QuestMind Battle
+# QuestMind
 ![Alternative Text](/public/Landing%20Page.png)
 A interactive mental fitness experience that teaches evidence-based emotional regulation skills through a retro RPG battle loop.
 

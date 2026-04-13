@@ -5,6 +5,7 @@ A interactive mental fitness experience that teaches evidence-based emotional re
 ## Quick Start
 
 ```bash
+git clone https://github.com/SuhasR3/QuestMind
 cd questmind-battle
 npm install
 npm run dev

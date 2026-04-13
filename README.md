@@ -3,6 +3,9 @@
 A interactive mental fitness experience that teaches evidence-based emotional regulation skills through a retro RPG battle loop.
 
 ## Quick Start
+Try it out [HERE](https://questmind.insforge.site/)
+
+OR
 
 ```bash
 git clone https://github.com/SuhasR3/QuestMind
